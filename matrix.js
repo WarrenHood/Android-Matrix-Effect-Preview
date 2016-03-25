@@ -1,10 +1,19 @@
 mode = 'matrix';
 fingerGrowth = 5;
 fps = 30;
-maxNums = 80;
+maxNums = 150;
 fingerX = null;
 fingerY = null;
 interv = screen.height/30;
+
+function IsDraggablePage(e){
+if($('.ui-page-active').attr('draggable')=='true')
+{
+return true;
+}
+return false;
+}
+
 function fingerDown(e){
 	fingerGrower = setInterval(function(){fingerTipRadius += fingerGrowth;},1000/fps);
 	fingerStatus = 1;
@@ -30,6 +39,13 @@ function closeToExplosion(x,y){
 	return Math.sqrt(Math.pow(x - fingerX,2) + Math.pow(y - fingerY,2)) <= fingerTipRadius;
 }
 window.onload = function(){
+	document.addEventListener('touchmove', function (e)
+{
+if (!IsDraggablePage(e))
+{
+e.preventDefault();
+}
+}, true);
 	document.onmousemove = fingerDrag;
 	document.onmousedown = fingerDown;
 	document.onmouseup = fingerUp;
@@ -53,7 +69,7 @@ function remove(elt){
 function anim(){
 	letters = document.getElementsByClassName('num');
 	console.log('Number of letters on screen: ' + letters.length)
-	for(var lett = 0;lett < letters.length;lett++)if(parseInt(letters[lett].style.top) > screen.height){remove(letters[lett]);letters.length -= 1};
+	for(var lett = 0;lett < letters.length;lett++)if(parseInt(letters[lett].style.top) > screen.height || parseInt(letters[lett].style.left) < 0 || parseInt(letters[lett].style.left) > screen.width ){remove(letters[lett]);letters.length -= 1};
 	for(var i = 0;i < maxNums - letters.length;i++)spawnChar(chars[Math.floor(Math.random()*chars.length)],i*interv);
 	move();
 }
