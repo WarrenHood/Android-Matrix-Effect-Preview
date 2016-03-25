@@ -1,7 +1,7 @@
 mode = 'matrix';
-fingerGrowth = 10;
+fingerGrowth = 5;
 fps = 30;
-maxNums = 200;
+maxNums = 80;
 fingerX = null;
 fingerY = null;
 interv = screen.height/30;
@@ -19,7 +19,7 @@ function fingerDrag(e){
 	fingerY = e.clientY;}
 }
 function fingerUp(){
-	fingerTipRadius = 150;
+	fingerTipRadius = 50;
 	fingerGrower = clearInterval(fingerGrower);
 	fingerStatus = 0;
 	fingerX = null;
@@ -38,8 +38,8 @@ window.onload = function(){
 function begin(){
 	animation = setInterval(anim,1000/fps);
 }
-fingerTipRadius = 150;
-fallSpeed = 30;
+fingerTipRadius = 50;
+fallSpeed = 20;
 if(mode == 'matrix')chars = '!@#$%^&*()_+=-/:;"{}|?<>,.0123456789QWERTYUIOPASDFGHJKLZXCVBNM';
 if(mode == 'rainbow')chars ='.';
 function spawnChar(c,y){
